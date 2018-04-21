@@ -1,0 +1,19 @@
+__opapp_include(../lib/html/optinomic/page/start.m4)
+<md-content>
+    <div ng-if="d.diagnoses.length > 0" ng-repeat="entry in d.diagnoses | orderBy:d.appInit.predicate">
+        <div layout="row" layout-xs="row" layout-gt-xs="row" layout-align="start start" layout-margin>
+            <div>
+                <p class="flow-text">{{entry.diagn_rank}}.</p>
+            </div>
+            <div flex>
+                <a target="_blank" ng-href="{{entry.icd_url_info}}">
+                    <p class="flow-text">{{entry.custom_text}}</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div ng-if="d.diagnoses.length === 0">
+        <p class="flow-text">Keine Diagnosen.</p>
+    </div>
+</md-content>
+__opapp_include(../lib/html/optinomic/page/end.m4)

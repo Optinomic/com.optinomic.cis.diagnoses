@@ -1,0 +1,50 @@
+<md-content class="md-padding">
+    <div ng-if="d.diagnoses.length === 0" class="md-padding">
+        <h1 class="md-display-2"><i class="mdi mdi-bell-outline"></i> {{d.dataMain.apps.current.name}}</h1>
+        <p class="flow-text">Keine Diagnosen verfügbar | No data available.</p>
+        <p class="flow-text">&nbsp;</p>
+    </div>
+    <div ng-if="d.diagnoses.length !== 0" ng-init="d.appInit.show_controls[$index].show_controls = false" ng-mouseover="d.appInit.show_controls[$index].show_controls = true" ng-mouseleave="d.appInit.show_controls[$index].show_controls = false" ng-repeat="entry in d.diagnoses | orderBy:d.appInit.predicate:d.appInit.reverse | filter:d.appInit.filter">
+        <div layout="row" layout-xs="row" layout-gt-xs="row" layout-align="start start" layout-margin>
+            <div flex="5" ng-if="!d.appInit.show_controls[$index].show_controls">
+                <p class="flow-text">{{entry.diagn_rank}}.</p>
+            </div>
+            <div hide-xs show-gt-xs flex="5" ng-if="d.appInit.show_controls[$index].show_controls">
+                <md-button ng-if="entry.diagn_rank !== 1" class="md-icon-button" ng-click="entryUp(entry.uniqueid)" aria-label="Up" style="color: #3F51B5;">
+                    <i class="md-title mdi mdi-menu-up"></i>
+                    <md-tooltip md-direction="top">
+                        Diagnose aufwerten
+                    </md-tooltip>
+                </md-button>
+                <md-button ng-if="entry.diagn_rank !== d.diagnoses.length" class="md-icon-button" ng-click="entryDown(entry.uniqueid)" aria-label="Down" style="color: #3F51B5;">
+                    <i class="md-title mdi mdi-menu-down"></i>
+                    <md-tooltip md-direction="bottom">
+                        Diagnose abwerten
+                    </md-tooltip>
+                </md-button>
+            </div>
+            <div flex>
+                <a target="_blank" ng-href="{{entry.icd_url_info}}">
+                    <p class="flow-text" ng-bind-html="entry.custom_text_html"></p>
+                </a>
+            </div>
+            <div flex="5" ng-if="!d.appInit.show_controls[$index].show_controls">
+                &nbsp;
+            </div>
+            <div flex="5" ng-if="d.appInit.show_controls[$index].show_controls">
+                <md-button class="md-icon-button " ng-click="showConfirm($event, entry.uniqueid) " aria-label="Löschen " style="color: #9E9E9E; ">
+                    <i class="md-title mdi mdi-delete "></i>
+                    <md-tooltip md-direction="bottom">
+                        Diagnose löschen
+                    </md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="entryEdit(entry.uniqueid)" aria-label="Bearbeiten" style="color: #3F51B5;">
+                    <i class="md-title mdi mdi-pencil"></i>
+                    <md-tooltip md-direction="bottom">
+                        Diagnose bearbeiten
+                    </md-tooltip>
+                </md-button>
+            </div>
+        </div>
+    </div>
+</md-content>
